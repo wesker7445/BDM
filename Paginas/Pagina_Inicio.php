@@ -1,0 +1,126 @@
+<?php
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de Inicio </title>
+    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div class="Inicio-container">
+        <div class="Intercambio-container">
+            <div id="tab-login" class="Tab Tab-Activo" onclick="cambiarTab('login')">Iniciar Sesión</div>
+            <div id="tab-registro" class="Tab" onclick="cambiarTab('registro')">Regístrate</div>
+        </div>
+
+        <form action="Pagina_Principal.php" id="form-login">
+            <div class="grupo-input">
+                <label for="CorreoU">Correo Electronico</label>
+                <input type="text" id="CorreoU" placeholder="ejemplo@correo.com">
+            </div>
+             <div class="grupo-input">
+                <label for="ContrasenaU">Contraseña</label>
+                <input type="password" id="ContrasenaU" placeholder="••••••••">
+            </div>
+            <input type="submit" class="boton-submit" value="Iniciar Sesión">
+        </form>
+
+        <form action="Pagina_Principal.php" id="form-registro" class="hidden">
+            <div class="grupo-input">
+                <label for="NombreR">Nombre</label>
+                <input type="text" id="NombreR" placeholder="Tu nombre">
+            </div>
+            <div class="grupo-input">
+                <label for="ApellidoR">Apellido</label>
+                <input type="text" id="ApellidoR" placeholder="Tu apellido">
+            </div>
+            <div class="grupo-input">
+                <label for="AliasR">Alias</label>
+                <input type="text" id="AliasR" placeholder="Tu alias">
+            </div>
+            <div class="grupo-input">
+                <label for="FechaR">Fecha de Nacimiento</label>
+                <input type="date" id="FechaR" placeholder="Tu fecha de nacimiento">
+            </div>
+            <div class="grupo-input">
+                <label for="GeneroR">Selecciona un genero:</label>
+                <select name="GeneroR" id="GeneroR">
+                    <option value="HombreR">Hombre</option>
+                    <option value="MujerR">Mujer</option>
+                </select>
+            </div>
+            <div class="grupo-input">
+                <label for="file" class="boton-archivo">
+                    <i class="fa-solid fa-upload"></i> Subir Foto de Perfil
+                </label>
+                <input type="file" id="file" name="multimedia" accept="image/*" style="display: none;">
+            </div>
+            <div class="grupo-input">
+                <label for="CorreoR">Correo Electronico</label>
+                <input type="text" id="CorreoR" placeholder="nuevo@correo.com">
+            </div>
+             <div class="grupo-input">
+                <label for="ContrasenaR">Contraseña</label>
+                <input type="password" id="ContrasenaR" placeholder="Crea una contraseña">
+            </div>
+            <input type="submit" class="boton-submit" value="Crear Cuenta">
+        </form>
+    </div>
+
+    <button class="theme-switch" onclick="toggleTheme()">
+        <i id="theme-icon" class="fa-solid fa-sun"></i>
+    </button>
+
+    <script>
+        function cambiarTab(tipo) {
+            const formLogin = document.getElementById('form-login');
+            const formRegistro = document.getElementById('form-registro');
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegistro = document.getElementById('tab-registro');
+
+            if (tipo === 'login') {
+                formLogin.classList.remove('hidden');
+                formRegistro.classList.add('hidden');
+                tabLogin.classList.add('Tab-Activo');
+                tabRegistro.classList.remove('Tab-Activo');
+            } else {
+                formLogin.classList.add('hidden');
+                formRegistro.classList.remove('hidden');
+                tabLogin.classList.remove('Tab-Activo');
+                tabRegistro.classList.add('Tab-Activo');
+            }
+        }
+
+        // Al cargar la página, revisar si ya existe una preferencia guardada
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    actualizarIcono(currentTheme);
+
+    function toggleTheme() {
+        let theme = document.documentElement.getAttribute('data-theme');
+        let newTheme = (theme === 'dark') ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme); // Guarda la elección para otras páginas
+        actualizarIcono(newTheme);
+    }
+
+    function actualizarIcono(theme) {
+        const icon = document.getElementById('theme-icon');
+        if (theme === 'light') {
+            icon.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+    }
+
+    
+    </script>
+
+</body> 
+</html>

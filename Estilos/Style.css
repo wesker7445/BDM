@@ -1,0 +1,809 @@
+:root {
+    /* MODO NOCHE */
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    --container-bg: #1e293b; 
+    --text-primary: #f1f5f9;
+    --input-bg: #334155;      
+    --input-border: #475569;
+    --sidebar-bg: rgba(15, 23, 42, 0.9);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --top-bar-text: white;
+    --placeholder-color: #d8e2f1;
+}
+
+[data-theme="light"] {
+    /* MODO DÍA */
+    --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    --container-bg: #f0f3f8;
+    --text-primary: #1e293b; 
+    --input-bg: #f8fafc;      
+    --input-border: #cbd5e1;
+    --sidebar-bg: rgba(248, 250, 252, 0.95); 
+    --card-bg: #ffffff;
+    --top-bar-text: #0f172a; 
+    --menu-text: #334155; 
+    --placeholder-color: #64748b;
+}
+
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    transition: background 0.5s ease;
+}
+
+.Inicio-container{
+    background: var(--container-bg);
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 380px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color: var(--text-primary); 
+    max-height: 90vh;
+    overflow-y: auto;
+    transition: all 0.3s ease-in-out;
+    
+}
+
+.Inicio-container::-webkit-scrollbar {
+    width: 6px;
+}
+.Inicio-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.Intercambio-container{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.Tab{
+    padding-bottom: 10px;
+    cursor: pointer;
+    color: #64748b;
+    font-weight: bold;
+    flex: 1;
+    text-align: center;
+    padding-bottom: 10px;
+    transition: 0.3s;
+}
+
+.Tab-Activo{
+    color: #5d5dff;
+    border-bottom: 3px solid #5d5dff;
+    padding-bottom: 9px;
+}
+
+.grupo-input{
+    margin-bottom: 15px;
+}
+
+.grupo-input label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+}
+
+.grupo-input input[type="text"], 
+.grupo-input input[type="password"], 
+.grupo-input input[type="date"], 
+.grupo-input input[type="number"],
+.grupo-input select {
+    width: 100%;
+    padding: 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    color: var(--text-primary); 
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+
+.boton-submit {
+    width: 100%;
+    padding: 12px;
+    background: #6c6cd4;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton-submit:hover{
+    background: #2626f3;
+}
+
+.hidden {
+    display: none;
+}
+
+.boton-archivo {
+display: block;
+    padding: 10px;
+    background: var(--input-bg);
+    border: 2px dashed var(--input-border);
+    border-radius: 6px;
+    text-align: center;
+    color: var(--text-primary) !important; /* El !important asegura que no lo pise otra regla */
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+    margin-top: 10px;
+}
+
+.boton-archivo:hover {
+    background:var(--input-border);
+    color: var(--text-primary);
+}
+
+.grupo-input input::placeholder {
+    color: var(--placeholder-color);
+    opacity: 1; 
+}
+
+.grupo-input input:focus::placeholder {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/*----------------------------------------------*/
+
+
+.dashboard-body {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--top-bar-text);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--top-bar-text);
+    font-weight: bold;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item a {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: var(--menu-text);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.menu-item i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-item:hover, .menu-item.activo {
+    background: rgba(93, 93, 255, 0.2);
+    color: #5d5dff;
+}
+
+.menu-item.activo {
+    border-left: 4px solid #5d5dff;
+}
+
+/* Área de Contenido Principal */
+.main-content {
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 30px;
+    background: transparent; /* Permite ver el gradiente del body */
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    color: var(--top-bar-text);
+}
+
+.card-placeholder {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 40px;
+    min-height: 400px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    background: var(--card-bg);
+}
+
+.card-placeholder p {
+    color: var(--text-primary);
+}
+
+.avatar-mini {
+    width: 40px;
+    height: 40px;
+    background: #64748b;
+    border-radius: 50%;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.theme-switch {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #5d5dff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+/*----------------------------------*/
+
+/* Contenedor Grid */
+.siniestros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding-top: 10px;
+}
+
+/* Tarjeta Estilo YouTube */
+.siniestro-card {
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.siniestro-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.card-image img, 
+.card-image video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* Badge de estado (Rúbrica: Seguimiento de estados) */
+.status-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.status-badge.loss { background: #dc2626; } /* Rojo para pérdida total */
+
+/* Información de la tarjeta */
+.card-info {
+    display: flex;
+    gap: 12px;
+}
+
+.card-text {
+    flex: 1;
+}
+
+.card-title {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: var(--top-bar-text); /* Cambia según el modo día/noche */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-author, .card-date {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--top-bar-text); 
+}
+
+.video-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem;
+    opacity: 0.7;
+    z-index: 1;
+}
+
+/*----------------------------------*/
+
+.chat-container {
+    height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    background: var(--container-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Botón del Clip (Adjuntar) */
+
+.chat-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: transparent;
+    color: #5d5dff; /* Tu color principal */
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.chat-icon-btn:hover {
+    background: rgba(93, 93, 255, 0.15); /* Fondo suave al pasar el mouse */
+    transform: rotate(45deg); /* Efecto visual de rotación */
+    color: #4a4aff;
+}
+
+.chat-input-area {
+    padding: 15px 25px;
+    background: var(--container-bg); /* Cambia con el tema */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-input-field {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg); 
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.chat-input-field:focus {
+    border-color: #5d5dff; /* Brilla al escribir */
+    box-shadow: 0 0 8px rgba(93, 93, 255, 0.2);
+}
+
+.message {
+    max-width: 70%;
+    display: flex;
+}
+
+.message.incoming { 
+    align-self: flex-start; 
+}
+.message.outgoing { 
+    align-self: flex-end; 
+}
+
+.message-content {
+    padding: 12px 16px;
+    border-radius: 15px;
+    position: relative;
+    color: var(--text-primary);
+}
+
+.incoming .message-content { 
+    background: var(--input-bg); 
+    color: var(--text-primary); 
+    border: 1px solid var(--input-border);
+    border-bottom-left-radius: 2px;
+}
+.outgoing .message-content { 
+    background: #5d5dff; 
+    color: white; border-bottom-right-radius: 2px; 
+}
+
+.chat-img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+.chat-input-area {
+    padding: 15px;
+    background: var(--sidebar-bg);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-input-field {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg); 
+    color: var(--text-primary);
+}
+
+.chat-send-btn {
+    background: #5d5dff;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+/*---------------------------------------*/
+.form-siniestro-container {
+    background: var(--container-bg);
+    height: auto; 
+    max-height: none; 
+    overflow-y: visible; /* Elimina el recorte y la barra */
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 700px;
+    margin: 20px auto; 
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 15px;
+}
+
+.form-siniestro-container textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: inherit;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.form-siniestro-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.grupo-input input[type="text"],
+.grupo-input input[type="date"],
+.grupo-input select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    height: 40px; /* Tamaño pequeño y constante */
+}
+
+#descS {
+    width: 100%;
+    min-height: 120px; /* Altura mayor solo para este campo */
+    resize: vertical;  /* Permite al usuario agrandarlo si quiere */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Para Firefox */
+    appearance: textfield;
+    
+    /* Diseño personalizado */
+    text-align: center; /* Centra el número */
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #5d5dff; /* Color de énfasis */
+    border: 2px solid var(--input-border);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    border-radius: 7.5px;
+}
+
+input[type="number"]:focus {
+    border-color: #5d5dff;
+    box-shadow: 0 0 10px rgba(93, 93, 255, 0.2);
+    outline: none;
+}
+
+/*-------------------------------------*/
+/* --- Sección de Perfil --- */
+.perfil-header {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.avatar-perfil {
+    width: 120px;
+    height: 120px;
+    background: #64748b;
+    border-radius: 50%;
+    margin: 0 auto 15px auto;
+    border: 4px solid #5d5dff;
+    box-shadow: 0 0 20px rgba(93, 93, 255, 0.3);
+    object-fit: cover;
+}
+
+.perfil-info h3 {
+    margin: 5px 0;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+}
+
+.perfil-info p {
+    color: var(--placeholder-color);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de botones de acción */
+.perfil-acciones {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.boton-cancelar {
+    background: #475569; /* Gris azulado para diferenciar del principal */
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton-cancelar:hover {
+    background: #334155;
+}
+
+/*--------------------------------*/
+/* Estilo para el Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: var(--container-bg); /* Cambia entre #1e293b y #f0f3f8 */
+    color: var(--text-primary);
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh; /* No sobrepasa el 90% del alto de pantalla */
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden; /* Mantiene el contenido dentro de los bordes redondeados */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.detalle-container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; 
+    height: 100%;
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+.detalle-media img, 
+.detalle-media video {
+    width: 100%;
+    height: 100%;
+    max-height: 80vh; 
+    object-fit: contain; 
+    display: block;
+}
+
+.detalle-media {
+    background: #000; /* Fondo negro para que resalte la foto/video */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.detalle-info {
+    padding: 30px;
+    overflow-y: auto;
+    background: var(--container-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.detalle-info::-webkit-scrollbar {
+    width: 6px;
+}
+
+.detalle-info::-webkit-scrollbar-thumb {
+    background: #5d5dff;
+    border-radius: 10px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.media-type-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(93, 93, 255, 0.9);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Botón de cerrar (X) */
+.modal-close {
+position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    background: rgba(0, 0, 0, 0.3); /* Fondo sutil para que se vea sobre fotos blancas */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: white; /* Siempre blanco para contraste sobre el fondo negro del media */
+    cursor: pointer;
+    z-index: 2010;
+    border: none;
+    transition: 0.3s;
+}
+
+.modal-close:hover {
+    background: #5d5dff;
+    transform: scale(1.1);
+    color: #5d5dff;
+}
+
+/* Botón Contactar Soporte */
+.boton-contacto {
+    margin-top: auto; /* Lo empuja al fondo del contenedor info */
+    padding: 12px;
+    background: #5d5dff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton-contacto:hover {
+    background: #4a4aff;
+    box-shadow: 0 4px 12px rgba(93, 93, 255, 0.4);
+}
+
+/*-------------------------------------------*/
+/* Foto circular grande en el perfil */
+.avatar-perfil {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover; /* Centra la imagen sin deformarla */
+    border: 4px solid #5d5dff;
+    display: block;
+    margin: 0 auto 15px auto;
+    box-shadow: 0 0 15px rgba(93, 93, 255, 0.4);
+}
+
+/* Foto circular pequeña en la barra superior */
+.avatar-mini {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #5d5dff;
+    margin-left: 12px;
+    vertical-align: middle;
+}
+
+/* Alineación del nombre y foto en el header */
+.user-info-top {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+/* Diseño de los botones del perfil */
+.perfil-acciones {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
