@@ -1,3 +1,8 @@
+<?php
+
+?>
+
+
 <section id="sec-siniestros" class="content-section">
     <header class="top-bar">
         <h2>Listado de Siniestros</h2>

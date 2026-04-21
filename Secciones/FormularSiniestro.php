@@ -1,3 +1,8 @@
+<?php
+
+?>
+
+
 <section id="sec-crear-siniestro" class="content-section hidden">
     <header class="top-bar">
         <h2>Reportar Nuevo Siniestro</h2>

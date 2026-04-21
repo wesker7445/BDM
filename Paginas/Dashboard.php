@@ -42,7 +42,7 @@ $tipo = $_SESSION['user_tipo'];
         if ($tipo == 3) include '../Secciones/Dictamen.php';
     ?>
     
-    <?php include 'Secciones/ModalDetalle.php'; ?>
+    <?php include '../Secciones/ModalDetalle.php'; ?>
 </main>
 </body>
 </html>
