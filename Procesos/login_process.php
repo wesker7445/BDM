@@ -1,23 +1,30 @@
 <?php
-session_start();
-require_once '../Conexiones/Config.php';
-// Supongamos que recibes datos de un formulario
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['correo'];
-    $pass = $_POST['password'];
+    session_start();
+    require_once '../Conexiones/Config.php';
 
-    // Consulta para validar usuario y obtener su tipo
-    $stmt = $pdo->prepare("SELECT IdUsuario, IdTipo, Nombre FROM Usuario WHERE Email = ? AND PassW = ?");
-    $stmt->execute([$email, $pass]);
-    $user = $stmt->fetch();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $identificador = $_POST['Correo']; // Campo de Email o Alias
+        $pass = $_POST['password'];
 
-    if ($user) {
-        $_SESSION['user_id'] = $user['IdUsuario'];
-        $_SESSION['user_tipo'] = $user['IdTipo']; // 1: Asegurado, 2: Ajustador, 3: Supervisor
-        $_SESSION['user_nombre'] = $user['Nombre'];
-        header("Location: Dashboard.php");
-    } else {
-        echo "Datos incorrectos";
+        try {
+            // Llamada a la Opción 2
+            // Los parámetros que no se usan en la validación se envían como NULL
+            $stmt = $pdo->prepare("CALL SP_GestionarUsuario(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ?, ?, ?)");
+            $stmt->execute([$identificador, $pass, $identificador]);
+            $user = $stmt->fetch();
+
+            if ($user) {
+                $_SESSION['user_id'] = $user['IdUsuario'];
+                $_SESSION['user_tipo'] = $user['IdTipo'];
+                $_SESSION['user_nombre'] = $user['Nombre'];
+                $_SESSION['user_alias'] = $user['Alias'];
+                
+                header("Location: ../Paginas/Dashboard.php");
+            } else {
+                header("Location: ../Paginas/Pagina_Inicio.php?error=login");
+            }
+        } catch (PDOException $e) {
+            die("Error crítico: " . $e->getMessage());
+        }
     }
-}
 ?>

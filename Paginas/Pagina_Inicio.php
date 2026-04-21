@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina de Inicio </title>
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="../Estilos/Style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -30,7 +30,7 @@
             <input type="submit" class="boton-submit" value="Iniciar Sesión">
         </form>
 
-        <form action="Pagina_Principal.php" id="form-registro" class="hidden">
+        <form action="../Procesos/register_process.php" method="POST" id="form-registro" class="hidden" enctype="multipart/form-data">
             <div class="grupo-input">
                 <label for="NombreR">Nombre</label>
                 <input type="text" name="nombre" id="NombreR" placeholder="Tu nombre">
@@ -42,6 +42,14 @@
             <div class="grupo-input">
                 <label for="AliasR">Alias</label>
                 <input type="text" name="Alias" id="AliasR" placeholder="Tu alias">
+            </div>
+            <div class="grupo-input">
+                <label for="RFC">RFC</label>
+                <input type="text" name="RFC" id="RFC" placeholder="Tu RFC">
+            </div>
+            <div class="grupo-input">
+                <label for="Telefono">Telefono</label>
+                <input type="text" name="Telefono" id="Telefono" placeholder="Tu Telefono">
             </div>
             <div class="grupo-input">
                 <label for="FechaR">Fecha de Nacimiento</label>
