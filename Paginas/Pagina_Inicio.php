@@ -18,7 +18,7 @@
             <div id="tab-registro" class="Tab" onclick="cambiarTab('registro')">Regístrate</div>
         </div>
 
-        <form action="Pagina_Principal.php" id="form-login">
+        <form action="Procesos/login_process.php" method="POST" id="form-login">
             <div class="grupo-input">
                 <label for="CorreoU">Correo Electronico</label>
                 <input type="text" id="CorreoU" placeholder="ejemplo@correo.com">

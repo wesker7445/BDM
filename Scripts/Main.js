@@ -20,6 +20,20 @@ function mostrarSeccion(seccionId) {
 function abrirDetalleSiniestro(titulo, imagen, estado, ajustador, fecha, descripcion) {
     const modal = document.getElementById('modal-detalle');
     const contenedor = document.getElementById('contenedor-media-modal');
-    // ... resto de tu lógica actual ...
+
+    if (imagen.toLowerCase().endsWith('.mp4')) {
+        contenedor.innerHTML = `<video src="${imagen}" controls autoplay muted style="width:100%; height:100%; object-fit:cover;"></video>`;
+    } else {
+        contenedor.innerHTML = `<img id="detalle-img" src="${imagen}" alt="Evidencia" style="width:100%; height:100%; object-fit:cover;">`;
+    }
+    
+    document.getElementById('detalle-titulo').innerText = titulo;
+    document.getElementById('detalle-status').innerText = estado;
+    
+    const infoParagraphs = document.querySelectorAll('.detalle-info p');
+    infoParagraphs[0].innerHTML = `<strong><i class="fa-solid fa-user-tie"></i> Ajustador:</strong> ${ajustador}`;
+    infoParagraphs[1].innerHTML = `<strong><i class="fa-solid fa-clock"></i> Fecha:</strong> ${fecha}`;
+    
+    document.querySelector('.descripcion-texto').innerText = descripcion;
     modal.classList.remove('hidden');
 }

@@ -31,11 +31,18 @@ $tipo = $_SESSION['user_tipo'];
         </ul>
     </nav>
 
-    <main class="main-content">
-        <?php 
-            include 'Secciones/Siniestros.php'; 
-            if ($tipo == 2) include 'Secciones/FormularioSiniestro.php';
-        ?>
-    </main>
+<main class="main-content">
+    <?php 
+        include 'Secciones/Siniestros.php'; 
+        include 'Secciones/Perfil.php';
+
+        // Secciones condicionales según el tipo de usuario
+        if ($tipo == 1 || $tipo == 3) include 'Secciones/Seguimiento.php';
+        if ($tipo == 2) include 'Secciones/FormularioSiniestro.php';
+        if ($tipo == 3) include 'Secciones/Dictamen.php';
+    ?>
+    
+    <?php include 'Secciones/ModalDetalle.php'; ?>
+</main>
 </body>
 </html>
