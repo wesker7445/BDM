@@ -1,5 +1,5 @@
 <?php
-$host = '127.0.0.1';
+$host = '127.0.0.1;port=3307';
 $db   = 'bdm';
 $user = 'root';
 $pass = 'admin'; // Pon aquí la que usaste en el Workbench
