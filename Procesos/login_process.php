@@ -1,7 +1,6 @@
 <?php
 session_start();
-require_once 'Conexiones/Config.php';
-
+require_once '../Conexiones/Config.php';
 // Supongamos que recibes datos de un formulario
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['correo'];

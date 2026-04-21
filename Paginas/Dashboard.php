@@ -9,7 +9,7 @@ $tipo = $_SESSION['user_tipo'];
 <head>
     <meta charset="UTF-8">
     <title>Panel de Control</title>
-    <link rel="stylesheet" href="Estilos/Style.css"> <script src="Scripts/Main.js" defer></script> </head>
+    <link rel="stylesheet" href="../Estilos/Style.css"> <script src="../Scripts/Main.js" defer></script> </head>
 <body class="dashboard-body">
     <nav class="sidebar">
         <div class="sidebar-header"><h3>Mi Seguro</h3></div>
@@ -33,13 +33,13 @@ $tipo = $_SESSION['user_tipo'];
 
 <main class="main-content">
     <?php 
-        include 'Secciones/Siniestros.php'; 
-        include 'Secciones/Perfil.php';
+        include '../Secciones/Siniestros.php';
+        include '../Secciones/Perfil.php';
 
         // Secciones condicionales según el tipo de usuario
-        if ($tipo == 1 || $tipo == 3) include 'Secciones/Seguimiento.php';
-        if ($tipo == 2) include 'Secciones/FormularioSiniestro.php';
-        if ($tipo == 3) include 'Secciones/Dictamen.php';
+        if ($tipo == 1 || $tipo == 3) include '../Secciones/Seguimiento.php';
+        if ($tipo == 2) include '../Secciones/FormularioSiniestro.php';
+        if ($tipo == 3) include '../Secciones/Dictamen.php';
     ?>
     
     <?php include 'Secciones/ModalDetalle.php'; ?>

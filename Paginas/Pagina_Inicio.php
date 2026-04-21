@@ -21,11 +21,11 @@
         <form action="Procesos/login_process.php" method="POST" id="form-login">
             <div class="grupo-input">
                 <label for="CorreoU">Correo Electronico</label>
-                <input type="text" id="CorreoU" placeholder="ejemplo@correo.com">
+                <input type="text" name="Correo" id="CorreoU" placeholder="ejemplo@correo.com">
             </div>
              <div class="grupo-input">
                 <label for="ContrasenaU">Contraseña</label>
-                <input type="password" id="ContrasenaU" placeholder="••••••••">
+                <input type="password" name="password" id="ContrasenaU" placeholder="••••••••">
             </div>
             <input type="submit" class="boton-submit" value="Iniciar Sesión">
         </form>
@@ -33,23 +33,23 @@
         <form action="Pagina_Principal.php" id="form-registro" class="hidden">
             <div class="grupo-input">
                 <label for="NombreR">Nombre</label>
-                <input type="text" id="NombreR" placeholder="Tu nombre">
+                <input type="text" name="nombre" id="NombreR" placeholder="Tu nombre">
             </div>
             <div class="grupo-input">
                 <label for="ApellidoR">Apellido</label>
-                <input type="text" id="ApellidoR" placeholder="Tu apellido">
+                <input type="text" name="apellido" id="ApellidoR" placeholder="Tu apellido">
             </div>
             <div class="grupo-input">
                 <label for="AliasR">Alias</label>
-                <input type="text" id="AliasR" placeholder="Tu alias">
+                <input type="text" name="Alias" id="AliasR" placeholder="Tu alias">
             </div>
             <div class="grupo-input">
                 <label for="FechaR">Fecha de Nacimiento</label>
-                <input type="date" id="FechaR" placeholder="Tu fecha de nacimiento">
+                <input type="date" id="FechaR" name="Fecha" placeholder="Tu fecha de nacimiento">
             </div>
             <div class="grupo-input">
                 <label for="GeneroR">Selecciona un genero:</label>
-                <select name="GeneroR" id="GeneroR">
+                <select name="GeneroR" name="genero" id="GeneroR">
                     <option value="HombreR">Hombre</option>
                     <option value="MujerR">Mujer</option>
                 </select>
@@ -62,11 +62,11 @@
             </div>
             <div class="grupo-input">
                 <label for="CorreoR">Correo Electronico</label>
-                <input type="text" id="CorreoR" placeholder="nuevo@correo.com">
+                <input type="text" name="correroR" id="CorreoR" placeholder="nuevo@correo.com">
             </div>
              <div class="grupo-input">
                 <label for="ContrasenaR">Contraseña</label>
-                <input type="password" id="ContrasenaR" placeholder="Crea una contraseña">
+                <input type="password" name="passwordR" id="ContrasenaR" placeholder="Crea una contraseña">
             </div>
             <input type="submit" class="boton-submit" value="Crear Cuenta">
         </form>
