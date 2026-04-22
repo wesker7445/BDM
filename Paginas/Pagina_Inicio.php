@@ -71,15 +71,17 @@
                     <option value="MujerR">Mujer</option>
                 </select>
             </div>
+
             <div class="grupo-input">
-                <label for="file" class="boton-archivo">
+                <label for="multimedia" class="boton-archivo">
                     <i class="fa-solid fa-upload"></i> Subir Foto de Perfil
                 </label>
-                <input type="file" name="multimedia" id="multimedia" accept="image/*" required>
+                <input type="file" name="multimedia" id="multimedia" accept="image/*" class="input-oculto">
             </div>
+
             <div class="grupo-input">
                 <label for="CorreoR">Correo Electronico</label>
-                <input type="text" name="correroR" id="CorreoR" placeholder="nuevo@correo.com">
+                <input type="email" name="correroR" id="CorreoR" placeholder="nuevo@correo.com">
             </div>
              <div class="grupo-input">
                 <label for="ContrasenaR">Contraseña</label>

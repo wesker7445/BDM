@@ -15,7 +15,6 @@ $options = [
 
 try {
      $pdo = new PDO($dsn, $user, $pass, $options);
-     echo "¡Conexión exitosa al proyecto!";
 } catch (\PDOException $e) {
      throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
