@@ -10,17 +10,11 @@
     <title>Pagina de Inicio </title>
     <link rel="stylesheet" href="../Estilos/Style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../Scripts/Main.js" defer></script>
 </head>
 <body>
 <div class="Inicio-container">
-
-        <?php if(isset($_GET['error'])): ?>
-        <p style="color: red; text-align: center;">Correo o contraseña incorrectos.</p>
-        <?php endif; ?>
-
-        <?php if(isset($_GET['registro']) && $_GET['registro'] == 'exito'): ?>
-            <p style="color: green; text-align: center;">¡Registro exitoso! Ya puedes iniciar sesión.</p>
-        <?php endif; ?>
 
         <div class="Intercambio-container">
             <div id="tab-login" class="Tab Tab-Activo" onclick="cambiarTab('login')">Iniciar Sesión</div>
@@ -29,7 +23,7 @@
 
         <form action="../Procesos/login_process.php" method="POST" id="form-login">
             <div class="grupo-input">
-                <label for="CorreoU">Correo Electronico</label>
+                <label for="CorreoU">Correo Electronico o tu alias</label>
                 <input type="text" name="Correo" id="CorreoU" placeholder="ejemplo@correo.com">
             </div>
              <div class="grupo-input">
@@ -94,52 +88,6 @@
     <button class="theme-switch" onclick="toggleTheme()">
         <i id="theme-icon" class="fa-solid fa-sun"></i>
     </button>
-
-    <script>
-        function cambiarTab(tipo) {
-            const formLogin = document.getElementById('form-login');
-            const formRegistro = document.getElementById('form-registro');
-            const tabLogin = document.getElementById('tab-login');
-            const tabRegistro = document.getElementById('tab-registro');
-
-            if (tipo === 'login') {
-                formLogin.classList.remove('hidden');
-                formRegistro.classList.add('hidden');
-                tabLogin.classList.add('Tab-Activo');
-                tabRegistro.classList.remove('Tab-Activo');
-            } else {
-                formLogin.classList.add('hidden');
-                formRegistro.classList.remove('hidden');
-                tabLogin.classList.remove('Tab-Activo');
-                tabRegistro.classList.add('Tab-Activo');
-            }
-        }
-
-        // Al cargar la página, revisar si ya existe una preferencia guardada
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    actualizarIcono(currentTheme);
-
-    function toggleTheme() {
-        let theme = document.documentElement.getAttribute('data-theme');
-        let newTheme = (theme === 'dark') ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme); // Guarda la elección para otras páginas
-        actualizarIcono(newTheme);
-    }
-
-    function actualizarIcono(theme) {
-        const icon = document.getElementById('theme-icon');
-        if (theme === 'light') {
-            icon.classList.replace('fa-sun', 'fa-moon');
-        } else {
-            icon.classList.replace('fa-moon', 'fa-sun');
-        }
-    }
-
-    
-    </script>
 
 </body> 
 </html>

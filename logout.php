@@ -2,6 +2,6 @@
 session_start();
 session_unset();
 session_destroy();
-header("Location: ../Pagina_Inicio.php");
+header("Location: Paginas/Pagina_Inicio.php");
 exit();
 ?>
