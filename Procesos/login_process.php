@@ -18,6 +18,7 @@
                 $_SESSION['user_tipo'] = $user['IdTipo'];
                 $_SESSION['user_nombre'] = $user['Nombre'];
                 $_SESSION['user_alias'] = $user['Alias'];
+                $_SESSION['user_foto'] = $user['Foto'] ? base64_encode($user['Foto']) : null;
                 
                 header("Location: ../Paginas/Dashboard.php");
             } else {

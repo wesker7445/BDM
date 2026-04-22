@@ -14,7 +14,7 @@
         $params = [
             1,                  // GU_Opcion: 1 para INSERTAR
             null,               // GU_IdUser: null para nuevo registro
-            1,                  // GU_IdTipo: 1 por defecto (Asegurado)
+            3,                  // GU_IdTipo: 1 por defecto (Asegurado)
             $_POST['nombre'],   // GU_Nombre
             $_POST['apellido'], // GU_Apellido
             $_POST['Fecha'],    // GU_Fecha

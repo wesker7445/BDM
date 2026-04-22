@@ -8,7 +8,9 @@
         <h2>Listado de Siniestros</h2>
         <div class="user-info-top">
             <span>Bienvenido, <?php echo $_SESSION['user_nombre']; ?></span>
-            <img src="Multimedia/Imagen/Asegurado.png" class="avatar-mini" alt="Mini">
+            <?php if (isset($_SESSION['user_foto']) && $_SESSION['user_foto']): ?>
+                <img src="data:image/png;base64,<?php echo $_SESSION['user_foto']; ?>" class="avatar-mini">
+           <?php endif; ?>
         </div>
     </header>
     

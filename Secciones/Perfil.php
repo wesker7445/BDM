@@ -4,7 +4,9 @@
     </header>
     <div class="form-siniestro-container">
         <div class="perfil-header">
-            <img src="Multimedia/Imagen/Asegurado.png" class="avatar-perfil" alt="Avatar">
+            <?php if (isset($_SESSION['user_foto']) && $_SESSION['user_foto']): ?>
+                <img src="data:image/png;base64,<?php echo $_SESSION['user_foto']; ?>"  class="avatar-perfil" alt="Avatar">
+            <?php endif; ?>
             <h3><?php echo $_SESSION['user_nombre']; ?></h3>
         </div>
         <form action="Procesos/actualizar_perfil.php" method="POST">

@@ -13,12 +13,21 @@
 </head>
 <body>
 <div class="Inicio-container">
+
+        <?php if(isset($_GET['error'])): ?>
+        <p style="color: red; text-align: center;">Correo o contraseña incorrectos.</p>
+        <?php endif; ?>
+
+        <?php if(isset($_GET['registro']) && $_GET['registro'] == 'exito'): ?>
+            <p style="color: green; text-align: center;">¡Registro exitoso! Ya puedes iniciar sesión.</p>
+        <?php endif; ?>
+
         <div class="Intercambio-container">
             <div id="tab-login" class="Tab Tab-Activo" onclick="cambiarTab('login')">Iniciar Sesión</div>
             <div id="tab-registro" class="Tab" onclick="cambiarTab('registro')">Regístrate</div>
         </div>
 
-        <form action="Procesos/login_process.php" method="POST" id="form-login">
+        <form action="../Procesos/login_process.php" method="POST" id="form-login">
             <div class="grupo-input">
                 <label for="CorreoU">Correo Electronico</label>
                 <input type="text" name="Correo" id="CorreoU" placeholder="ejemplo@correo.com">
@@ -53,11 +62,11 @@
             </div>
             <div class="grupo-input">
                 <label for="FechaR">Fecha de Nacimiento</label>
-                <input type="date" id="FechaR" name="Fecha" placeholder="Tu fecha de nacimiento">
+                <input type="date" name="Fecha" id="FechaR" name="Fecha" placeholder="Tu fecha de nacimiento">
             </div>
             <div class="grupo-input">
-                <label for="GeneroR">Selecciona un genero:</label>
-                <select name="GeneroR" name="genero" id="GeneroR">
+                <label for="genero">Selecciona un genero:</label>
+                <select name="genero" id="GeneroR">
                     <option value="HombreR">Hombre</option>
                     <option value="MujerR">Mujer</option>
                 </select>
@@ -66,7 +75,7 @@
                 <label for="file" class="boton-archivo">
                     <i class="fa-solid fa-upload"></i> Subir Foto de Perfil
                 </label>
-                <input type="file" id="file" name="multimedia" accept="image/*" style="display: none;">
+                <input type="file" name="multimedia" id="multimedia" accept="image/*" required>
             </div>
             <div class="grupo-input">
                 <label for="CorreoR">Correo Electronico</label>
