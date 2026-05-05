@@ -55,7 +55,9 @@
 
             <div class="grupo-input">
                 <label class="boton-archivo">
-                    <i class="fa-solid fa-camera"></i> Cambiar Foto de Perfil
+                    <i class="fa-solid fa-camera"></i> 
+                    <!-- Agregamos este span para proteger el texto -->
+                    <span class="texto-archivo">Cambiar Foto de Perfil</span> 
                     <input type="file" name="multimedia" accept="image/*" style="display: none;">
                 </label>
             </div>

@@ -28,9 +28,8 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Panel de Control</title>
-    <link rel="stylesheet" href="../Estilos/Style.css"> <script src="../Scripts/Main.js" defer></script> 
+    <link rel="stylesheet" href="../Estilos/Style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../Scripts/Main.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -63,7 +62,7 @@ try {
 
         if ($tipo == 1 || $tipo == 3) include '../Secciones/Seguimiento.php';
         if ($tipo == 2) include '../Secciones/FormularioSiniestro.php';
-        if ($tipo == 3) include '../Secciones/Dictamen.php';
+        if ($tipo == 1) include '../Secciones/Dictamen.php';
         
         include '../Secciones/ModalDetalle.php'; 
     ?>

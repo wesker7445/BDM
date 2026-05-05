@@ -161,20 +161,24 @@ const inputsArchivo = document.querySelectorAll('input[type="file"]');
 
     inputsArchivo.forEach(input => {
         input.addEventListener('change', function() {
-            // Buscamos el label que contiene o está asociado al input
-            const label = this.closest('.boton-archivo') || 
-                        this.parentElement.querySelector('.boton-archivo') ||
-                        document.querySelector(`label[for="${this.id}"]`);
-
-            if (this.files.length > 0 && label) {
-                label.classList.add('archivo-cargado');
-                // Opcional: Cambiar el texto para mostrar que ya hay un archivo
-                const icono = label.querySelector('i');
-                label.innerHTML = '';
-                if (icono) label.appendChild(icono);
-                label.innerHTML += ' Archivo seleccionado';
+        const label = this.closest('.boton-archivo');
+        
+        if (this.files.length > 0 && label) {
+            label.classList.add('archivo-cargado');
+            
+            // Cambiamos el texto del span SIN borrar el input oculto
+            const spanTexto = label.querySelector('.texto-archivo');
+            if (spanTexto) {
+                spanTexto.textContent = ' Archivo seleccionado';
+            }
             } else if (label) {
-                label.classList.remove('archivo-cargado');
+            label.classList.remove('archivo-cargado');
+            
+            // Restauramos el texto original si el usuario cancela la selección
+            const spanTexto = label.querySelector('.texto-archivo');
+            if (spanTexto) {
+                spanTexto.textContent = ' Cambiar Foto de Perfil';
+            }
             }
         });
     });
