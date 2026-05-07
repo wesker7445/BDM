@@ -1,26 +1,28 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_tipo'])) { header("Location: Pagina_Inicio.php"); exit(); }
+    session_start();
+    if (!isset($_SESSION['user_tipo'])) { header("Location: Pagina_Inicio.php"); exit(); }
 
-require_once '../Conexiones/Config.php';
-$tipo = $_SESSION['user_tipo'];
-$userId = $_SESSION['user_id'];
-$userData = null;
+    require_once '../Conexiones/Config.php';
+    $tipo = $_SESSION['user_tipo'];
+    $userId = $_SESSION['user_id'];
+    $userData = null;
 
-try {
-    // Llamada a la nueva Opción 5: Consulta por ID
-    // Enviamos el ID de la sesión y el resto de los parámetros como NULL
-    $stmt = $pdo->prepare("CALL SP_GestionarUsuario(5, ?, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
-    $stmt->execute([$userId]);
-    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+    // En Dashboard.php, busca la parte del perfil
+    try {
+        $stmt = $pdo->prepare("CALL SP_GestionarUsuario(5, ?, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+        $stmt->execute([$userId]);
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Actualizamos la foto en la sesión por si cambió
-    if ($userData && $userData['Foto']) {
-        $_SESSION['user_foto'] = base64_encode($userData['Foto']);
+        // --- AGREGA ESTA LÍNEA AQUÍ ---
+        $stmt->closeCursor(); 
+        // ------------------------------
+
+        if ($userData && $userData['Foto']) {
+            $_SESSION['user_foto'] = base64_encode($userData['Foto']);
+        }
+    } catch (PDOException $e) {
+        error_log("Error al cargar perfil: " . $e->getMessage());
     }
-} catch (PDOException $e) {
-    error_log("Error al cargar perfil: " . $e->getMessage());
-}
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +60,14 @@ try {
                 </li>
             <?php endif; ?>
 
+            <?php if ($tipo == 2 || $tipo == 1): ?>
+                <li class="menu-item">
+                    <a href="#" onclick="mostrarSeccion('sec-gestion-vehiculos')">
+                        <i class="fa-solid fa-car-rear"></i> Gestión de Vehículos
+                    </a>
+                </li>
+            <?php endif; ?>
+
             <li class="menu-item"><a href="#" onclick="mostrarSeccion('sec-perfil')"><i class="fa-solid fa-user"></i> Mi Perfil</a></li>
             <li class="menu-item logout"><a href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> Salir</a></li>
         </ul>
@@ -78,6 +88,10 @@ try {
             include '../Secciones/RegistrarAseguradora.php'; // NUEVO ARCHIVO
         }
         
+        if ($tipo == 1 || $tipo == 2) {
+            include '../Secciones/GestionVehiculos.php';
+        }
+
         include '../Secciones/ModalDetalle.php'; 
     ?>
 </main>

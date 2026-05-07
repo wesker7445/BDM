@@ -233,3 +233,45 @@ const inputsArchivo = document.querySelectorAll('input[type="file"]');
         });
     });
 });
+
+function limpiarFormularioVehiculo() {
+    document.getElementById('form-vehiculo').reset();
+    document.getElementById('id_vehiculo').value = "";
+    document.getElementById('form-vehiculo-titulo').innerText = "Registrar Nuevo Vehículo";
+}
+
+function editarVehiculo(placa, marca, modelo, serie, color, tipo) {
+    document.getElementById('form-vehiculo-titulo').innerText = "Editando: " + placa;
+    document.getElementById('id_vehiculo').value = placa; // Usamos la placa como ID
+    document.getElementById('v_placas').value = placa;
+    document.getElementById('v_marca').value = marca;
+    document.getElementById('v_modelo').value = modelo;
+    document.getElementById('v_serie').value = serie;
+    document.getElementById('v_color').value = color;
+    document.getElementById('v_tipo').value = tipo;
+    
+    // Desplazar al formulario
+    document.getElementById('form-vehiculo').scrollIntoView({ behavior: 'smooth' });
+
+    
+}
+
+function eliminarVehiculo(placa) {
+    Swal.fire({
+        title: '¿Desactivar vehículo?',
+        text: `El vehículo con placas ${placa} ya no aparecerá en los nuevos reportes.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#475569',
+        confirmButtonText: 'Sí, desactivar',
+        cancelButtonText: 'Cancelar',
+        background: 'var(--container-bg)',
+        color: 'var(--text-primary)'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Redirigimos al proceso enviando la placa
+            window.location.href = `../Procesos/eliminar_vehiculo.php?placa=${placa}`;
+        }
+    });
+}

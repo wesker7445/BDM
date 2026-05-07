@@ -97,8 +97,10 @@ body {
     color: var(--text-primary);
 }
 
+/* Cambia .form-vehiculo h3 por #form-vehiculo h3 */
 .content-section h2, 
-.perfil-header h3, 
+.perfil-header h3,
+#form-vehiculo h3, 
 .perfil-header p {
     color: var(--text-primary) !important;
 }
@@ -839,4 +841,16 @@ position: absolute;
     display: flex;
     gap: 15px;
     margin-top: 25px;
+}
+
+/* Nueva clase para badges dentro de tablas o formularios */
+.status-table {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #5d5dff; /* Color azul de tu tema */
+    color: white;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-align: center;
 }
