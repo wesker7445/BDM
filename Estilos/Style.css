@@ -108,6 +108,7 @@ body {
 .grupo-input input[type="email"],
 .grupo-input input[type="date"], 
 .grupo-input input[type="number"],
+.grupo-input input[type="tel"],
 .grupo-input select {
     width: 100%;
     padding: 12px;

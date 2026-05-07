@@ -4,24 +4,25 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $idUsuario = $_POST['id_usuario'] ?? null;
-        
-        echo "<h3>1. Revisión de Datos</h3>";
-        echo "ID de Usuario a actualizar: " . ($idUsuario ? $idUsuario : "NULO") . "<br>";
+
+        // Si el ID llega vacío, suele ser porque la imagen superó el límite de PHP y vació el POST
+        if (empty($idUsuario)) {
+            header("Location: ../Paginas/Dashboard.php?update=error_peso");
+            exit();
+        }
 
         $fotoBinaria = null; 
         if (isset($_FILES['multimedia'])) {
             $codigoError = $_FILES['multimedia']['error'];
-            echo "Código de archivo PHP: " . $codigoError . " (0 = Éxito, 4 = Sin archivo)<br>";
             
             if ($codigoError === 0) {
                 $fotoBinaria = file_get_contents($_FILES['multimedia']['tmp_name']);
-                echo "Peso de la imagen leída por PHP: " . strlen($fotoBinaria) . " bytes<br>";
+            } elseif ($codigoError !== 4) { // 4 significa que no subió archivo, lo cual es válido
+                header("Location: ../Paginas/Dashboard.php?update=error_archivo");
+                exit();
             }
-        } else {
-            echo "No se detectó el campo de archivo 'multimedia'.<br>";
         }
 
-        echo "<h3>2. Ejecución en MySQL</h3>";
         try {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $stmt = $pdo->prepare("CALL SP_GestionarUsuario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -36,10 +37,8 @@
             
             if ($fotoBinaria !== null) {
                 $stmt->bindValue(8, $fotoBinaria, PDO::PARAM_LOB);
-                echo "Mandando la imagen binaria al Procedimiento Almacenado...<br>";
             } else {
                 $stmt->bindValue(8, null, PDO::PARAM_NULL);
-                echo "Mandando valor NULL al SP (no hay foto nueva)...<br>";
             }
             
             $stmt->bindValue(9, $_POST['genero'] ?? null);
@@ -51,20 +50,22 @@
             $stmt->execute();
             
             $filas = $stmt->rowCount();
-            echo "Filas afectadas en la base de datos: " . $filas . "<br><br>";
             
             if ($filas == 0) {
-                echo "<strong style='color:orange;'>MySQL procesó todo sin errores, pero afectó 0 filas. Esto pasa si los datos enviados son idénticos a los actuales o si el SP falló silenciosamente.</strong><br>";
+                // Se ejecutó bien pero no se modificó nada (datos iguales)
+                header("Location: ../Paginas/Dashboard.php?update=no_changes");
             } else {
-                echo "<strong style='color:green;'>MySQL afectó 1 fila. La actualización se hizo correctamente.</strong><br>";
+                // ¡Éxito!
                 $_SESSION['user_nombre'] = $_POST['nombre'];
+                header("Location: ../Paginas/Dashboard.php?update=success");
             }
-            
-            // Detenemos la ejecución intencionalmente para ver la pantalla
-            die("<br><a href='../Paginas/Dashboard.php'>Regresar al Dashboard</a>");
+            exit();
 
         } catch (PDOException $e) {
-            die("<strong style='color:red;'>Error SQL Detonado:</strong> " . $e->getMessage());
+            // Guardamos el error real en los logs del servidor por seguridad
+            error_log("Error SQL perfil: " . $e->getMessage());
+            header("Location: ../Paginas/Dashboard.php?update=error_bd");
+            exit();
         }
     }
 ?>

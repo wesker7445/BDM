@@ -42,11 +42,28 @@ function cambiarTab(tipo) {
 }
 
 // 3. Cambio de secciones en el Dashboard
+// 3. Cambio de secciones en el Dashboard
 function mostrarSeccion(seccionId) {
+    // Ocultar todas las secciones y quitar clase activa del menú
     document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('hidden'));
     document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('activo'));
+    
     const target = document.getElementById(seccionId);
-    if (target) target.classList.remove('hidden');
+    if (target) {
+        target.classList.remove('hidden');
+
+        // Lógica para el mensaje de advertencia
+        if (seccionId === 'sec-crear-siniestro') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Instrucción',
+                text: 'Primero registre el vehículo involucrado, caso contrario no se podra registrar el siniestro.',
+                confirmButtonColor: '#5d5dff',
+                background: 'var(--container-bg)', // Usa tus variables de CSS de Main.js
+                color: 'var(--text-primary)'
+            });
+        }
+    }
 }
 
 // 4. Validación del formulario de registro
@@ -134,26 +151,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+// Notificaciones de Actualización de Perfil
     const updateStatus = urlParams.get('update');
 
-    if (updateStatus === 'success') {
-        Swal.fire({
-            icon: 'success',
-            title: '¡Actualizado!',
-            text: 'Tu perfil se ha actualizado correctamente.',
-            confirmButtonColor: '#5d5dff',
-            background: 'var(--container-bg)',
-            color: 'var(--text-primary)'
-        });
-    } else if (updateStatus === 'error') {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Hubo un problema al actualizar tu perfil. Inténtalo de nuevo.',
-            confirmButtonColor: '#d33',
-            background: 'var(--container-bg)',
-            color: 'var(--text-primary)'
-        });
+    if (updateStatus) {
+        // Limpiamos la URL para que la alerta no se repita si el usuario recarga la página
+        window.history.replaceState(null, null, window.location.pathname);
+
+        if (updateStatus === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Actualizado!',
+                text: 'Tu perfil se ha actualizado correctamente.',
+                confirmButtonColor: '#5d5dff',
+                background: 'var(--container-bg)',
+                color: 'var(--text-primary)'
+            });
+        } else if (updateStatus === 'no_changes') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Sin cambios',
+                text: 'No modificaste ningún dato nuevo o seleccionaste la misma foto.',
+                confirmButtonColor: '#5d5dff',
+                background: 'var(--container-bg)',
+                color: 'var(--text-primary)'
+            });
+        } else if (updateStatus === 'error_peso') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Imagen muy pesada',
+                text: 'La imagen supera el límite de tamaño permitido por el servidor.',
+                confirmButtonColor: '#d33',
+                background: 'var(--container-bg)',
+                color: 'var(--text-primary)'
+            });
+        } else if (updateStatus === 'error_archivo') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Error al subir',
+                text: 'Hubo un problema procesando la imagen. Intenta con otra.',
+                confirmButtonColor: '#f59e0b',
+                background: 'var(--container-bg)',
+                color: 'var(--text-primary)'
+            });
+        } else if (updateStatus === 'error_bd') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error del sistema',
+                text: 'Ocurrió un error en la base de datos. Inténtalo más tarde.',
+                confirmButtonColor: '#d33',
+                background: 'var(--container-bg)',
+                color: 'var(--text-primary)'
+            });
+        }
     }
 
     // Listener para cambios en inputs de archivos

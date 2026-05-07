@@ -46,7 +46,16 @@ try {
                 <li class="menu-item"><a href="#" onclick="mostrarSeccion('sec-crear-siniestro')"><i class="fa-solid fa-car-burst"></i> Crear Siniestro</a></li>
             
             <?php elseif ($tipo == 1): // Supervisor ?>
-                <li class="menu-item"><a href="#" onclick="mostrarSeccion('sec-dictamen')"><i class="fa-solid fa-gavel"></i> Dictaminar</a></li>
+                <li class="menu-item">
+                    <a href="#" onclick="mostrarSeccion('sec-dictamen')">
+                        <i class="fa-solid fa-gavel"></i> Dictaminar
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" onclick="mostrarSeccion('sec-registrar-aseguradora')">
+                        <i class="fa-solid fa-building-shield"></i> Registrar Aseguradora
+                    </a>
+                </li>
             <?php endif; ?>
 
             <li class="menu-item"><a href="#" onclick="mostrarSeccion('sec-perfil')"><i class="fa-solid fa-user"></i> Mi Perfil</a></li>
@@ -56,18 +65,22 @@ try {
 
 <main class="main-content">
     <?php 
-        // Carga de secciones
+        // Carga de secciones base
         include '../Secciones/Siniestros.php';
         include '../Secciones/Perfil.php';
 
         if ($tipo == 1 || $tipo == 3) include '../Secciones/Seguimiento.php';
         if ($tipo == 2) include '../Secciones/FormularioSiniestro.php';
-        if ($tipo == 1) include '../Secciones/Dictamen.php';
+        
+        // Secciones exclusivas del Supervisor
+        if ($tipo == 1) {
+            include '../Secciones/Dictamen.php';
+            include '../Secciones/RegistrarAseguradora.php'; // NUEVO ARCHIVO
+        }
         
         include '../Secciones/ModalDetalle.php'; 
     ?>
 </main>
-
 
 <button class="theme-switch" onclick="toggleTheme()" style="position: fixed; bottom: 20px; right: 20px;">
     <i id="theme-icon" class="fa-solid fa-sun"></i>
