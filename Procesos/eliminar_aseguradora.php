@@ -10,7 +10,7 @@ if (isset($_GET['id'])) {
         $stmt = $pdo->prepare("CALL SP_GestionarAseguradora(2, ?, NULL, NULL, NULL, NULL, NULL, NULL)");
         $stmt->execute([$id]);
         
-        header("Location: ../Paginas/Dashboard.php?update=success");
+        header("Location: ../Paginas/Dashboard.php?update=success&msg=aseg_del");
     } catch (PDOException $e) {
         error_log("Error al eliminar aseguradora: " . $e->getMessage());
         header("Location: ../Paginas/Dashboard.php?update=error_bd");

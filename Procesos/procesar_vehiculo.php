@@ -18,7 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $pdo->prepare("CALL SP_GestionarVehiculo(?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$opcion, $placa, $marca, $color, $tipo_v, $modelo, $serie]);
         
-        header("Location: ../Paginas/Dashboard.php?update=success");
+        // Si es opción 3 es actualización, si no, es registro
+        $msg = ($opcion == 3) ? 'vehiculo_upd' : 'vehiculo_reg';
+        header("Location: ../Paginas/Dashboard.php?update=success&msg=$msg");
         exit();
     } catch (PDOException $e) {
         die("Error en la Base de Datos: " . $e->getMessage());

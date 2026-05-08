@@ -18,7 +18,7 @@ try {
 
     <div class="form-siniestro-container">
         <form action="../Procesos/procesar_aseguradora.php" method="POST" id="form-aseguradora">
-            <h3 style="color: var(--text-primary); margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+            <h3 id="form-aseguradora-titulo" style="color: var(--text-primary); margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
                 Registrar Nueva Aseguradora
             </h3>
             
@@ -26,38 +26,38 @@ try {
 
             <div class="grupo-input">
                 <label>Nombre de la Empresa</label>
-                <input type="text" name="nombre_aseguradora" placeholder="Ej. Seguros Atlas" required>
+                <input type="text" name="nombre_aseguradora" id="aseg_nombre" required>
             </div>
 
             <div class="grupo-input">
                 <label>Representante legal</label>
-                <input type="text" name="Representante_legal" placeholder="Ej. Alberto Mendez" required>
+                <input type="text" name="Representante_legal" id="aseg_representante" required>
             </div>
 
             <div class="grupo-input">
                 <label>RFC del representante</label>
-                <input type="text" name="RFC" placeholder="Ej. MCD15CX23" required>
+                <input type="text" name="RFC" id="aseg_rfc" required>
             </div>
 
             <div class="grid-2-columnas" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                 <div class="grupo-input">
                     <label>Teléfono de Contacto</label>
-                    <input type="tel" name="telefono" placeholder="811-000-0000">
+                    <input type="tel" name="telefono" id="aseg_telefono">
                 </div>
                 <div class="grupo-input">
                     <label>Correo Electrónico de Soporte</label>
-                    <input type="email" name="email_soporte" placeholder="contacto@seguro.com">
+                    <input type="email" name="email_soporte" id="aseg_email">
                 </div>
             </div>
 
             <div class="grupo-input">
                 <label>Dirección de la empresa</label>
-                <input type="text" name="Direccion" placeholder="Ej. Av. Fidel Velazquez" required>
+                <input type="text" name="Direccion" id="aseg_direccion" required>
             </div>
 
             <div style="margin-top: 20px; display: flex; gap: 15px;">
-                <input type="submit" class="boton-submit" value="Guardar Aseguradora">
-                <button type="reset" class="boton-cancelar">Limpiar</button>
+                <input type="submit" id="btn-submit-aseguradora" class="boton-submit" value="Guardar Aseguradora">
+                <button type="button" class="boton-cancelar" onclick="limpiarFormularioAseguradora()">Limpiar</button>
             </div>
         </form>
     </div>
@@ -81,12 +81,25 @@ try {
                         <td><?php echo htmlspecialchars($aseg['RFC']); ?></td>
                         <td><?php echo htmlspecialchars($aseg['Telefono']); ?></td>
                         <td>
+                            <button class="chat-icon-btn" style="color: #5d5dff; margin-right: 10px;" 
+                                    onclick="editarAseguradora(
+                                        '<?php echo $aseg['IdAseguradora']; ?>',
+                                        '<?php echo addslashes($aseg['Nombre']); ?>',
+                                        '<?php echo addslashes($aseg['RepresentanteLegal']); ?>',
+                                        '<?php echo $aseg['RFC']; ?>',
+                                        '<?php echo $aseg['Telefono']; ?>',
+                                        '<?php echo $aseg['Email']; ?>',
+                                        '<?php echo addslashes($aseg['Direccion']); ?>'
+                                    )">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+
                             <button class="chat-icon-btn" style="color: #ff5d5d;" 
                                     onclick="eliminarAseguradora(<?php echo $aseg['IdAseguradora']; ?>, '<?php echo addslashes($aseg['Nombre']); ?>')">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
-                    </tr>
+                                            </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>

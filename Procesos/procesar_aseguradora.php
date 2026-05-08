@@ -18,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $pdo->prepare("CALL SP_GestionarAseguradora(?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$opcion, $id_aseguradora, $nombre, $representante, $rfc, $telefono, $email, $direccion]);
         
-        header("Location: ../Paginas/Dashboard.php?update=success");
+        $msg = ($opcion == 3) ? 'aseg_upd' : 'aseg_reg';
+        header("Location: ../Paginas/Dashboard.php?update=success&msg=$msg");
         exit();
     } catch (PDOException $e) {
         die("Error en la Base de Datos: " . $e->getMessage());

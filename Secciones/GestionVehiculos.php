@@ -59,7 +59,7 @@ try {
             </div>
 
             <div class="perfil-acciones">
-                <input type="submit" class="boton-submit" value="Guardar Vehículo">
+                <input type="submit" id="btn-submit-vehiculo" class="boton-submit" value="Guardar Vehículo">
                 <button type="button" class="boton-cancelar" onclick="limpiarFormularioVehiculo()">Limpiar</button>
             </div>
         </form>
@@ -89,6 +89,18 @@ try {
                             <span class="status-table"><?php echo htmlspecialchars($coche['EstadoTexto']); ?></span>
                         </td>
                         <td>
+                            <button class="chat-icon-btn" style="color: #5d5dff; margin-right: 10px;" 
+                                    onclick="editarVehiculo(
+                                        '<?php echo $coche['Placa']; ?>', 
+                                        '<?php echo $coche['Marca']; ?>', 
+                                        '<?php echo $coche['Modelo']; ?>', 
+                                        '<?php echo $coche['NumSerie']; ?>', 
+                                        '<?php echo $coche['Color']; ?>', 
+                                        '<?php echo $coche['Tipo']; ?>'
+                                    )">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+
                             <button class="chat-icon-btn" style="color: #ff5d5d;" 
                                     onclick="eliminarVehiculo('<?php echo $coche['Placa']; ?>')">
                                 <i class="fa-solid fa-trash"></i>

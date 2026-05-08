@@ -154,57 +154,48 @@ document.addEventListener('DOMContentLoaded', () => {
 // Notificaciones de Actualización de Perfil
     const updateStatus = urlParams.get('update');
 
-    if (updateStatus) {
-        // Limpiamos la URL para que la alerta no se repita si el usuario recarga la página
-        window.history.replaceState(null, null, window.location.pathname);
+    if (updateStatus === 'success') {
+            const msgType = urlParams.get('msg');
+            let titulo = '¡Logrado!';
+            let texto = 'Operación realizada con éxito.';
 
-        if (updateStatus === 'success') {
+            const mensajes = {
+                'vehiculo_reg': 'El vehículo ha sido registrado correctamente.',
+                'vehiculo_upd': 'Los datos del vehículo se han actualizado.',
+                'vehiculo_del': 'El vehículo ha sido desactivado del sistema.',
+                'aseg_reg': 'La aseguradora se registró exitosamente.',
+                'aseg_upd': 'La información de la aseguradora fue actualizada.',
+                'aseg_del': 'La aseguradora ha sido dada de baja.'
+            };
+
+            // Si existe el mensaje en el diccionario, lo usamos
+            if (mensajes[msgType]) {
+                texto = mensajes[msgType];
+            } else {
+                // Mensaje por defecto si no viene un 'msg' específico (como el perfil)
+                titulo = '¡Actualizado!';
+                texto = 'Tu perfil se ha actualizado correctamente.';
+            }
+
+            // UNICA LLAMADA A SWAL.FIRE
             Swal.fire({
+                icon: 'success',
+                title: titulo,
+                text: texto,
+                confirmButtonColor: '#5d5dff',
+                background: 'var(--container-bg)',
+                color: 'var(--text-primary)'
+            });
+
+            // ELIMINA ESTO:
+            /* Swal.fire({
                 icon: 'success',
                 title: '¡Actualizado!',
                 text: 'Tu perfil se ha actualizado correctamente.',
-                confirmButtonColor: '#5d5dff',
-                background: 'var(--container-bg)',
-                color: 'var(--text-primary)'
-            });
-        } else if (updateStatus === 'no_changes') {
-            Swal.fire({
-                icon: 'info',
-                title: 'Sin cambios',
-                text: 'No modificaste ningún dato nuevo o seleccionaste la misma foto.',
-                confirmButtonColor: '#5d5dff',
-                background: 'var(--container-bg)',
-                color: 'var(--text-primary)'
-            });
-        } else if (updateStatus === 'error_peso') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Imagen muy pesada',
-                text: 'La imagen supera el límite de tamaño permitido por el servidor.',
-                confirmButtonColor: '#d33',
-                background: 'var(--container-bg)',
-                color: 'var(--text-primary)'
-            });
-        } else if (updateStatus === 'error_archivo') {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Error al subir',
-                text: 'Hubo un problema procesando la imagen. Intenta con otra.',
-                confirmButtonColor: '#f59e0b',
-                background: 'var(--container-bg)',
-                color: 'var(--text-primary)'
-            });
-        } else if (updateStatus === 'error_bd') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error del sistema',
-                text: 'Ocurrió un error en la base de datos. Inténtalo más tarde.',
-                confirmButtonColor: '#d33',
-                background: 'var(--container-bg)',
-                color: 'var(--text-primary)'
-            });
+                ...
+            }); 
+            */
         }
-    }
 
     // Listener para cambios en inputs de archivos
 const inputsArchivo = document.querySelectorAll('input[type="file"]');
@@ -238,11 +229,20 @@ function limpiarFormularioVehiculo() {
     document.getElementById('form-vehiculo').reset();
     document.getElementById('id_vehiculo').value = "";
     document.getElementById('form-vehiculo-titulo').innerText = "Registrar Nuevo Vehículo";
+    document.getElementById('btn-submit-vehiculo').value = "Guardar Vehículo"; // Restaurar texto
+    
+    // Desbloquear placa
+    document.getElementById('v_placas').readOnly = false;
+    document.getElementById('v_placas').style.opacity = "1";
 }
 
 function editarVehiculo(placa, marca, modelo, serie, color, tipo) {
-    document.getElementById('form-vehiculo-titulo').innerText = "Editando: " + placa;
-    document.getElementById('id_vehiculo').value = placa; // Usamos la placa como ID
+    // Cambiar títulos y textos
+    document.getElementById('form-vehiculo-titulo').innerText = "Editando Vehículo: " + placa;
+    document.getElementById('btn-submit-vehiculo').value = "Actualizar Datos"; // Cambia el texto del botón
+    
+    // Asignar valores a los inputs
+    document.getElementById('id_vehiculo').value = placa; 
     document.getElementById('v_placas').value = placa;
     document.getElementById('v_marca').value = marca;
     document.getElementById('v_modelo').value = modelo;
@@ -250,10 +250,12 @@ function editarVehiculo(placa, marca, modelo, serie, color, tipo) {
     document.getElementById('v_color').value = color;
     document.getElementById('v_tipo').value = tipo;
     
-    // Desplazar al formulario
-    document.getElementById('form-vehiculo').scrollIntoView({ behavior: 'smooth' });
+    // Bloquear el input de placa (opcional, ya que es la llave primaria y no debería cambiar)
+    document.getElementById('v_placas').readOnly = true;
+    document.getElementById('v_placas').style.opacity = "0.7";
 
-    
+    // Desplazar suavemente al formulario
+    document.getElementById('form-vehiculo').scrollIntoView({ behavior: 'smooth' });
 }
 
 function eliminarVehiculo(placa) {
@@ -294,4 +296,32 @@ function eliminarAseguradora(id, nombre) {
             window.location.href = `../Procesos/eliminar_aseguradora.php?id=${id}`;
         }
     });
+}
+
+function editarAseguradora(id, nombre, representante, rfc, telefono, email, direccion) {
+    // 1. Cambiar visuales
+    document.getElementById('form-aseguradora-titulo').innerText = "Editando: " + nombre;
+    document.getElementById('btn-submit-aseguradora').value = "Actualizar Aseguradora";
+    
+    // 2. Llenar campos ocultos y visibles
+    document.getElementById('id_aseguradora').value = id;
+    document.getElementById('aseg_nombre').value = nombre;
+    document.getElementById('aseg_representante').value = representante;
+    document.getElementById('aseg_rfc').value = rfc;
+    document.getElementById('aseg_telefono').value = telefono;
+    document.getElementById('aseg_email').value = email;
+    document.getElementById('aseg_direccion').value = direccion;
+
+    // 3. Scroll al formulario
+    document.getElementById('form-aseguradora').scrollIntoView({ behavior: 'smooth' });
+}
+
+function limpiarFormularioAseguradora() {
+    // Resetear el formulario
+    document.getElementById('form-aseguradora').reset();
+    
+    // Limpiar ID oculto y restaurar textos
+    document.getElementById('id_aseguradora').value = "";
+    document.getElementById('form-aseguradora-titulo').innerText = "Registrar Nueva Aseguradora";
+    document.getElementById('btn-submit-aseguradora').value = "Guardar Aseguradora";
 }
