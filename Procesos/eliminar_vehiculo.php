@@ -13,10 +13,10 @@ if (isset($_GET['placa'])) {
         $stmt->execute([$placa]);
         
         // Redirigimos con un mensaje de éxito
-        header("Location: ../Dashboard.php?update=success");
+        header("Location: ../Paginas/Dashboard.php?update=success");
     } catch (PDOException $e) {
         error_log("Error al eliminar vehículo: " . $e->getMessage());
-        header("Location: ../Dashboard.php?update=error_bd");
+        header("Location: ../Paginas/Dashboard.php?update=error_bd");
     }
 } else {
     header("Location: ../Dashboard.php");

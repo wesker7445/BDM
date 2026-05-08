@@ -18,12 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $pdo->prepare("CALL SP_GestionarVehiculo(?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$opcion, $placa, $marca, $color, $tipo_v, $modelo, $serie]);
         
-        // CAMBIA ESTO:
-        // header("Location: /BDM/Dashboard.php?update=success");
-        
-        // POR ESTO (Ruta relativa):
-        header("Location: /Dashboard.php?update=success");
-        exit(); // El exit() es vital para detener el script inmediatamente
+        header("Location: ../Paginas/Dashboard.php?update=success");
+        exit();
     } catch (PDOException $e) {
         die("Error en la Base de Datos: " . $e->getMessage());
     }

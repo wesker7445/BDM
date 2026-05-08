@@ -275,3 +275,23 @@ function eliminarVehiculo(placa) {
         }
     });
 }
+
+function eliminarAseguradora(id, nombre) {
+    Swal.fire({
+        title: '¿Desactivar aseguradora?',
+        text: `La aseguradora "${nombre}" será dada de baja lógicamente y ya no aparecerá en los registros activos.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#475569',
+        confirmButtonText: 'Sí, desactivar',
+        cancelButtonText: 'Cancelar',
+        background: 'var(--container-bg)',
+        color: 'var(--text-primary)'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Redirigimos al proceso enviando el ID
+            window.location.href = `../Procesos/eliminar_aseguradora.php?id=${id}`;
+        }
+    });
+}

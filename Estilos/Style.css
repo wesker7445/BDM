@@ -36,6 +36,7 @@ body {
     background: var(--bg-gradient);
     background-attachment: fixed;
     transition: background 0.5s ease;
+    color: var(--text-primary);
 }
 
 .Inicio-container{
@@ -97,11 +98,11 @@ body {
     color: var(--text-primary);
 }
 
-/* Cambia .form-vehiculo h3 por #form-vehiculo h3 */
+/* Aplica el color del tema a todos los títulos y textos de las secciones */
 .content-section h2, 
-.perfil-header h3,
-#form-vehiculo h3, 
-.perfil-header p {
+.content-section h3, 
+.content-section p,
+.perfil-header h3 {
     color: var(--text-primary) !important;
 }
 

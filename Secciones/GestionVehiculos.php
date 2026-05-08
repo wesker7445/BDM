@@ -75,6 +75,9 @@ try {
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
+
+                <tr style="border-bottom: 1px solid var(--input-border); text-align: center;">
+                
             </thead>
                 <tbody>
                 <?php if (!empty($listaCoches)): ?>
