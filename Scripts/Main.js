@@ -159,13 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
             let titulo = '¡Logrado!';
             let texto = 'Operación realizada con éxito.';
 
+            // Busca esta sección en tu Main.js y agrega la línea de siniestro_reg:
             const mensajes = {
                 'vehiculo_reg': 'El vehículo ha sido registrado correctamente.',
                 'vehiculo_upd': 'Los datos del vehículo se han actualizado.',
                 'vehiculo_del': 'El vehículo ha sido desactivado del sistema.',
                 'aseg_reg': 'La aseguradora se registró exitosamente.',
                 'aseg_upd': 'La información de la aseguradora fue actualizada.',
-                'aseg_del': 'La aseguradora ha sido dada de baja.'
+                'aseg_del': 'La aseguradora ha sido dada de baja.',
+                'siniestro_reg': 'El siniestro y su evidencia se han guardado correctamente.' // <--- Agrega esta línea
             };
 
             // Si existe el mensaje en el diccionario, lo usamos
