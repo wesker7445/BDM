@@ -327,3 +327,31 @@ function limpiarFormularioAseguradora() {
     document.getElementById('form-aseguradora-titulo').innerText = "Registrar Nueva Aseguradora";
     document.getElementById('btn-submit-aseguradora').value = "Guardar Aseguradora";
 }
+
+function abrirDetalleSiniestro(titulo, imagen, estado, ajustador, fecha, descripcion, aseguradora, poliza, placa, ubicacion, unidades, promesa) {
+    const modal = document.getElementById('modal-detalle');
+    const contenedor = document.getElementById('contenedor-media-modal');
+
+    // 1. Manejo de Multimedia (Imagen o Video)
+    if (imagen.toLowerCase().includes('video') || imagen.toLowerCase().endsWith('.mp4')) {
+        contenedor.innerHTML = `<video src="${imagen}" controls autoplay muted style="width:100%; height:100%; object-fit:cover;"></video>`;
+    } else {
+        contenedor.innerHTML = `<img src="${imagen}" alt="Evidencia" style="width:100%; height:100%; object-fit:cover;">`;
+    }
+    
+    // 2. Inyección de datos dinámicos
+    document.getElementById('detalle-titulo').innerText = titulo;
+    document.getElementById('detalle-status').innerText = estado;
+    document.getElementById('det-ajustador').innerText = ajustador;
+    document.getElementById('det-aseguradora').innerText = aseguradora;
+    document.getElementById('det-poliza').innerText = poliza;
+    document.getElementById('det-placa').innerText = placa;
+    document.getElementById('det-ubicacion').innerText = ubicacion;
+    document.getElementById('det-fecha').innerText = fecha;
+    document.getElementById('det-promesa').innerText = promesa;
+    document.getElementById('det-descripcion').innerText = descripcion;
+    document.getElementById('det-unidades').innerText = unidades || "Ninguna";
+
+    // 3. Mostrar el modal
+    modal.classList.remove('hidden');
+}

@@ -21,7 +21,7 @@
             // El SP tiene muchos parámetros, hay que respetarlos todos
             // ANTES: CALL SP_GestionarSiniestro(2, ...)
 // AHORA: Cambiamos a 3 para que coincida con el INSERT del nuevo SP
-            $stmt = $pdo->prepare("CALL SP_GestionarSiniestro(3, NULL, ?, ?, ?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?, NULL, NULL)");
+            $stmt = $pdo->prepare("CALL SP_GestionarSiniestro(4, NULL, ?, ?, ?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?, NULL, NULL)");
             
             $stmt->execute([
                 $id_aseguradora,
