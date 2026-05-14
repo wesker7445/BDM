@@ -68,6 +68,14 @@
                 </li>
             <?php endif; ?>
 
+            <?php if ($tipo == 1 || $tipo == 2): // Solo Supervisor y Ajustador ?>
+                <li class="menu-item">
+                    <a href="#" onclick="mostrarSeccion('sec-gestion-multimedia')">
+                        <i class="fa-solid fa-photo-film"></i> Gestión Multimedia
+                    </a>
+                </li>
+            <?php endif; ?>
+
             <li class="menu-item"><a href="#" onclick="mostrarSeccion('sec-perfil')"><i class="fa-solid fa-user"></i> Mi Perfil</a></li>
             <li class="menu-item logout"><a href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> Salir</a></li>
         </ul>
@@ -90,6 +98,11 @@
         
         if ($tipo == 1 || $tipo == 2) {
             include '../Secciones/GestionVehiculos.php';
+        }
+
+        if ($tipo == 1 || $tipo == 2) {
+        // Incluimos la nueva sección de multimedia
+            include '../Secciones/GestionMultimedia.php';
         }
 
         include '../Secciones/ModalDetalle.php'; 

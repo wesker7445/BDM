@@ -355,3 +355,48 @@ function abrirDetalleSiniestro(titulo, imagen, estado, ajustador, fecha, descrip
     // 3. Mostrar el modal
     modal.classList.remove('hidden');
 }
+
+async function cargarMultimedia(idSiniestro) {
+    const contenedor = document.getElementById('contenedor-multimedia-dinamico');
+    const formExtra = document.getElementById('form-nueva-multimedia');
+    const inputId = document.getElementById('id_siniestro_input');
+
+    if (!idSiniestro) {
+        contenedor.innerHTML = '<p>Seleccione un siniestro.</p>';
+        formExtra.classList.add('hidden');
+        return;
+    }
+
+    // Mostrar formulario de carga y asignar ID
+    formExtra.classList.remove('hidden');
+    inputId.value = idSiniestro;
+
+    contenedor.innerHTML = '<p>Cargando evidencia...</p>';
+
+    try {
+        // Llamada a un pequeño archivo PHP que consulta la BD
+        const response = await fetch(`../Procesos/obtener_evidencia.php?id=${idSiniestro}`);
+        const data = await response.json();
+
+        if (data.length === 0) {
+            contenedor.innerHTML = '<p>Este siniestro no tiene fotos registradas.</p>';
+        } else {
+            contenedor.innerHTML = data.map(item => `
+                <div class="siniestro-card" style="width: 200px;">
+                    <div class="card-image">
+                        ${item.tipo.includes('video') 
+                            ? `<video src="${item.src}" muted></video>` 
+                            : `<img src="${item.src}">`}
+                    </div>
+                    <div class="card-info" style="padding: 10px; text-align: center;">
+                        <button onclick="eliminarFoto(${item.id})" style="background:none; border:none; color:#ff5d5d; cursor:pointer;">
+                            <i class="fa-solid fa-trash"></i> Eliminar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    } catch (error) {
+        contenedor.innerHTML = '<p>Error al cargar multimedia.</p>';
+    }
+}
