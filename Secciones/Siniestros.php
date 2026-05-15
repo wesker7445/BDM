@@ -50,7 +50,15 @@ try {
                         '<?php echo $s['FechaPromesa']; ?>'
                     )">
                     <div class="card-image">
-                        <img src="<?php echo $imagenSrc; ?>" alt="Siniestro">
+                        <?php if (isset($s['TipoArchivo']) && strpos($s['TipoArchivo'], 'video') !== false): ?>
+                            <div class="video-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.5rem; opacity: 0.7; z-index: 2; pointer-events: none;">
+                                <i class="fa-solid fa-play"></i>
+                            </div>
+                            <video src="<?php echo $imagenSrc; ?>#t=0.1" preload="metadata" muted style="width:100%; height:100%; object-fit:cover;"></video>
+                        <?php else: ?>
+                            <img src="<?php echo $imagenSrc; ?>" alt="Siniestro">
+                        <?php endif; ?>
+                        
                         <span class="status-badge"><?php echo htmlspecialchars($s['StatusSiniestro']); ?></span>
                     </div>
                     <div class="card-info">

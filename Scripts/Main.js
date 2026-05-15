@@ -378,25 +378,98 @@ async function cargarMultimedia(idSiniestro) {
         const response = await fetch(`../Procesos/obtener_evidencia.php?id=${idSiniestro}`);
         const data = await response.json();
 
-        if (data.length === 0) {
-            contenedor.innerHTML = '<p>Este siniestro no tiene fotos registradas.</p>';
-        } else {
-            contenedor.innerHTML = data.map(item => `
-                <div class="siniestro-card" style="width: 200px;">
-                    <div class="card-image">
-                        ${item.tipo.includes('video') 
-                            ? `<video src="${item.src}" muted></video>` 
-                            : `<img src="${item.src}">`}
-                    </div>
-                    <div class="card-info" style="padding: 10px; text-align: center;">
-                        <button onclick="eliminarFoto(${item.id})" style="background:none; border:none; color:#ff5d5d; cursor:pointer;">
-                            <i class="fa-solid fa-trash"></i> Eliminar
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
+    // Modificación dentro de cargarMultimedia en Main.js
+    if (data.length === 0) {
+        contenedor.innerHTML = '<p>Este siniestro no tiene fotos registradas.</p>';
+    } else {
+    // Modificar el bloque data.map dentro de cargarMultimedia() en Main.js
+    contenedor.innerHTML = data.map(item => `
+        <div class="siniestro-card" style="width: 200px; display: inline-block; margin: 10px;">
+            <div class="card-image" style="height: 130px; overflow: hidden; position: relative;">
+                ${item.tipo.includes('video') 
+                    ? `<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; opacity: 0.8; z-index: 1; pointer-events: none;"><i class="fa-solid fa-play"></i></div>
+                    <video src="${item.src}#t=0.1" preload="metadata" muted style="width:100%; height:100%; object-fit:cover;"></video>` 
+                    : `<img src="${item.src}" style="width:100%; height:100%; object-fit:cover;">`}
+            </div>
+            <div class="card-info" style="padding: 10px; display: flex; justify-content: space-around; align-items: center;">
+                <label style="color: #5d5dff; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 4px;">
+                    <i class="fa-solid fa-pen-to-square"></i> Cambiar
+                    <input type="file" accept="image/*,video/*" style="display: none;" onchange="reemplazarMultimedia(${item.id}, this)">
+                </label>
+                <button onclick="eliminarFoto(${item.id})" style="background:none; border:none; color:#ff5d5d; cursor:pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 4px;">
+                    <i class="fa-solid fa-trash"></i> Eliminar
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
     } catch (error) {
         contenedor.innerHTML = '<p>Error al cargar multimedia.</p>';
     }
 }
+
+// Agregar al final de Main.js
+async function reemplazarMultimedia(idMultimedia, input) {
+    if (input.files.length === 0) return;
+    
+    const file = input.files[0];
+    const formData = new FormData();
+    formData.append('id_multimedia', idMultimedia);
+    formData.append('nuevo_archivo', file);
+
+    // Feedback visual de carga utilizando SweetAlert2
+    Swal.fire({
+        title: 'Reemplazando archivo...',
+        text: 'Por favor, espere un momento.',
+        allowOutsideClick: false,
+        didOpen: () => { Swal.showLoading(); }
+    });
+
+    try {
+        const response = await fetch('../Procesos/reemplazar_multimedia.php', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Actualizado!',
+                text: 'El archivo multimedia ha sido modificado con éxito.',
+                timer: 1500,
+                showConfirmButton: false,
+                background: 'var(--container-bg)',
+                color: 'var(--text-primary)'
+            });
+            
+            // Recargar la galería del siniestro actual de forma reactiva
+            const idSiniestro = document.getElementById('selectSiniestro').value;
+            cargarMultimedia(idSiniestro);
+        } else {
+            Swal.fire({ icon: 'error', title: 'Error', text: data.message || 'No se pudo reemplazar el archivo.' });
+        }
+    } catch (error) {
+        Swal.fire({ icon: 'error', title: 'Error', text: 'No se logró establecer comunicación con el servidor.' });
+    }
+}
+
+// Añadir al final de Main.js para controlar el cierre del modal
+function cerrarModal() {
+    const modal = document.getElementById('modal-detalle');
+    if (modal) {
+        modal.classList.add('hidden');
+        
+        // Limpiamos el contenedor multimedia para detener la reproducción de videos al cerrar
+        const contenedor = document.getElementById('contenedor-media-modal');
+        if (contenedor) contenedor.innerHTML = '';
+    }
+}
+
+// Cerrar el modal automáticamente si el usuario hace clic fuera del recuadro del contenido
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('modal-detalle');
+    if (event.target === modal) {
+        cerrarModal();
+    }
+});

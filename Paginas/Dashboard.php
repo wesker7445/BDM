@@ -40,13 +40,19 @@
         <div class="sidebar-header"><h3>Mi Seguro</h3></div>
         <ul class="sidebar-menu">
             <li class="menu-item activo"><a href="#" onclick="mostrarSeccion('sec-siniestros')"><i class="fa-solid fa-car"></i> Siniestros</a></li>
-
-            <?php if ($tipo == 3): // Asegurado ?>
-                <li class="menu-item"><a href="#" onclick="mostrarSeccion('sec-seguimiento')"><i class="fa-solid fa-comments"></i> Mi Seguimiento</a></li>
+            <li class="menu-item">
+                <a href="#" onclick="mostrarSeccion('sec-seguimiento')">
+                    <i class="fa-solid fa-comments"></i> Seguimiento
+                </a>
+            </li>
             
-            <?php elseif ($tipo == 2): // Ajustador ?>
+            <?php if ($tipo == 2): // Ajustador ?>
                 <li class="menu-item"><a href="#" onclick="mostrarSeccion('sec-crear-siniestro')"><i class="fa-solid fa-car-burst"></i> Crear Siniestro</a></li>
-            
+                <li class="menu-item">
+                    <a href="#" onclick="mostrarSeccion('sec-gestion-multimedia')">
+                        <i class="fa-solid fa-photo-film"></i> Gestión Multimedia
+                    </a>
+                </li>
             <?php elseif ($tipo == 1): // Supervisor ?>
                 <li class="menu-item">
                     <a href="#" onclick="mostrarSeccion('sec-dictamen')">
@@ -68,14 +74,6 @@
                 </li>
             <?php endif; ?>
 
-            <?php if ($tipo == 1 || $tipo == 2): // Solo Supervisor y Ajustador ?>
-                <li class="menu-item">
-                    <a href="#" onclick="mostrarSeccion('sec-gestion-multimedia')">
-                        <i class="fa-solid fa-photo-film"></i> Gestión Multimedia
-                    </a>
-                </li>
-            <?php endif; ?>
-
             <li class="menu-item"><a href="#" onclick="mostrarSeccion('sec-perfil')"><i class="fa-solid fa-user"></i> Mi Perfil</a></li>
             <li class="menu-item logout"><a href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> Salir</a></li>
         </ul>
@@ -86,8 +84,8 @@
         // Carga de secciones base
         include '../Secciones/Siniestros.php';
         include '../Secciones/Perfil.php';
+        include '../Secciones/Seguimiento.php';
 
-        if ($tipo == 1 || $tipo == 3) include '../Secciones/Seguimiento.php';
         if ($tipo == 2) include '../Secciones/FormularioSiniestro.php';
         
         // Secciones exclusivas del Supervisor
@@ -100,7 +98,7 @@
             include '../Secciones/GestionVehiculos.php';
         }
 
-        if ($tipo == 1 || $tipo == 2) {
+        if ($tipo == 2) {
         // Incluimos la nueva sección de multimedia
             include '../Secciones/GestionMultimedia.php';
         }
