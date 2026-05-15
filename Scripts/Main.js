@@ -473,3 +473,9 @@ window.addEventListener('click', function(event) {
         cerrarModal();
     }
 });
+
+function cambiarSiniestro(id) {
+    if(!id) return;
+    // Redirecciona al Dashboard pasando el parámetro y una bandera extra (ver paso 3)
+    window.location.href = "Dashboard.php?id_siniestro=" + id + "&seccion=seguimiento";
+}

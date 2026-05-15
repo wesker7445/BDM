@@ -111,5 +111,16 @@
     <i id="theme-icon" class="fa-solid fa-sun"></i>
 </button>
 
+<?php if (isset($_GET['seccion']) && $_GET['seccion'] === 'seguimiento'): ?>
+<script>
+    // Espera a que el DOM cargue y ejecuta tu función nativa para forzar la vista de seguimiento
+    document.addEventListener("DOMContentLoaded", function() {
+        if (typeof mostrarSeccion === 'function') {
+            mostrarSeccion('sec-seguimiento');
+        }
+    });
+</script>
+<?php endif; ?>
+
 </body>
 </html>
